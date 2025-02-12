@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="400">
+        Title="Calculator" Height="600" Width="400">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -22,10 +22,46 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Name="Number" Grid.Column="3" Grid.Row="0" FontSize="24" HorizontalContentAlignment="Right" VerticalContentAlignment="Center">0</Label>
-        <Button Name="Procent Button" Grid.Column="0" Grid.Row="1" Margin="10" FontSize="24" Click="ClickPercent">%</Button>
-        <Button Name="Delete History Button" Grid.Column="1" Grid.Row="1" Margin="10" FontSize="24" Click="ClickPercent">CE</Button>
-        <Button Name="Delete Number on the Screen Button" Grid.Column="2" Grid.Row="1" Margin="10" FontSize="24" Click="ClickPercent">C</Button>
-        <Button Name="Backspace Button" Grid.Column="3" Grid.Row="1" Margin="10" FontSize="24" Click="ClickPercent">⌫</Button>
+
+        <!-- Display Label moved to second row -->
+        <Label Name="Number" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" 
+               FontSize="36" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
+               Padding="10,20">0</Label>
+
+        <!-- Second Row: Reciprocal, Square, and Square Root -->
+        <Button Name="PercentButton" Grid.Column="0" Grid.Row="1" Margin="10" FontSize="24" Click="ClickPercent">%</Button>
+        <Button Name="ClearEntryButton" Grid.Column="1" Grid.Row="1" Margin="10" FontSize="24" Click="ClickClearEntry">CE</Button>
+        <Button Name="ClearButton" Grid.Column="2" Grid.Row="1" Margin="10" FontSize="24" Click="ClickClear">C</Button>
+        <Button Name="BackspaceButton" Grid.Column="3" Grid.Row="1" Margin="10" FontSize="24" Click="ClickBackspace">⌫</Button>
+
+        <!-- Third Row of Buttons -->
+        <Button Name="ReciprocalButton" Grid.Column="0" Grid.Row="2" Margin="10" FontSize="24" Click="ClickReciprocal">1/x</Button>
+        <Button Name="SquareButton" Grid.Column="1" Grid.Row="2" Margin="10" FontSize="24" Click="ClickSquare">x²</Button>
+        <Button Name="SquareRootButton" Grid.Column="2" Grid.Row="2" Margin="10" FontSize="24" Click="ClickSquareRoot">√x</Button>
+        <Button Name="DivideButton" Grid.Column="3" Grid.Row="2" Margin="10" FontSize="24" Click="ClickOperation">/</Button>
+
+        <!-- Fourth Row of Buttons -->
+        <Button Name="SevenButton" Grid.Column="0" Grid.Row="3" Margin="10" FontSize="24" Click="ClickNumber">7</Button>
+        <Button Name="EightButton" Grid.Column="1" Grid.Row="3" Margin="10" FontSize="24" Click="ClickNumber">8</Button>
+        <Button Name="NineButton" Grid.Column="2" Grid.Row="3" Margin="10" FontSize="24" Click="ClickNumber">9</Button>
+        <Button Name="MultiplyButton" Grid.Column="3" Grid.Row="3" Margin="10" FontSize="24" Click="ClickOperation">*</Button>
+
+        <!-- Fifth Row of Buttons -->
+        <Button Name="FourButton" Grid.Column="0" Grid.Row="4" Margin="10" FontSize="24" Click="ClickNumber">4</Button>
+        <Button Name="FiveButton" Grid.Column="1" Grid.Row="4" Margin="10" FontSize="24" Click="ClickNumber">5</Button>
+        <Button Name="SixButton" Grid.Column="2" Grid.Row="4" Margin="10" FontSize="24" Click="ClickNumber">6</Button>
+        <Button Name="MinusButton" Grid.Column="3" Grid.Row="4" Margin="10" FontSize="24" Click="ClickOperation">-</Button>
+
+        <!-- Sixth Row of Buttons -->
+        <Button Name="OneButton" Grid.Column="0" Grid.Row="5" Margin="10" FontSize="24" Click="ClickNumber">1</Button>
+        <Button Name="TwoButton" Grid.Column="1" Grid.Row="5" Margin="10" FontSize="24" Click="ClickNumber">2</Button>
+        <Button Name="ThreeButton" Grid.Column="2" Grid.Row="5" Margin="10" FontSize="24" Click="ClickNumber">3</Button>
+        <Button Name="PlusButton" Grid.Column="3" Grid.Row="5" Margin="10" FontSize="24" Click="ClickOperation">+</Button>
+
+        <!-- Sign Toggle Button on the Sixth Row -->
+        <Button Name="SignToggleButton" Grid.Column="0" Grid.Row="6" Margin="10" FontSize="24" Click="ClickSignToggle">+/-</Button>
+        <Button Name="ZeroButton" Grid.Column="1" Grid.Row="6" Margin="10" FontSize="24" Click="ClickNumber">0</Button>
+        <Button Name="DecimalButton" Grid.Column="2" Grid.Row="6" Margin="10" FontSize="24" Click="ClickDecimal">.</Button>
+        <Button Name="EqualButton" Grid.Column="3" Grid.Row="6" Margin="10" FontSize="24" Click="ClickEqual">=</Button>
     </Grid>
 </Window>
