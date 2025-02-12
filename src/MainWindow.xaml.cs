@@ -74,8 +74,7 @@ namespace calculator
 
         private void ClickSignToggle(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(currentInput.ToString(), out number))
+            if (double.TryParse(currentInput.ToString(), out double number))
             {
                 number = -number;
                 currentInput.Clear();
@@ -86,8 +85,7 @@ namespace calculator
 
         private void ClickPercent(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(currentInput.ToString(), out number))
+            if (double.TryParse(currentInput.ToString(), out double number))
             {
                 number = number / 100;
                 currentInput.Clear();
@@ -112,8 +110,7 @@ namespace calculator
 
         private void ClickReciprocal(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(currentInput.ToString(), out number) && number != 0)
+            if (double.TryParse(currentInput.ToString(), out double number) && number != 0)
             {
                 number = 1 / number;
                 currentInput.Clear();
@@ -124,8 +121,7 @@ namespace calculator
 
         private void ClickSquare(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(currentInput.ToString(), out number))
+            if (double.TryParse(currentInput.ToString(), out double number))
             {
                 number = Math.Pow(number, 2);
                 currentInput.Clear();
@@ -136,8 +132,7 @@ namespace calculator
 
         private void ClickSquareRoot(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(currentInput.ToString(), out number) && number >= 0)
+            if (double.TryParse(currentInput.ToString(), out double number) && number >= 0)
             {
                 number = Math.Sqrt(number);
                 currentInput.Clear();
@@ -160,8 +155,7 @@ namespace calculator
                 PerformCalculation();
             }
             currentOperation = button.Content.ToString();
-            double number;
-            if (double.TryParse(currentInput.ToString(), out number))
+            if (double.TryParse(currentInput.ToString(), out double number))
             {
                 previousValue = number;
                 currentInput.Clear();
@@ -170,8 +164,7 @@ namespace calculator
 
         private void PerformCalculation()
         {
-            double number;
-            if (double.TryParse(currentInput.ToString(), out number) && previousValue.HasValue)
+            if (double.TryParse(currentInput.ToString(), out double number) && previousValue.HasValue)
             {
                 switch (currentOperation)
                 {
@@ -209,7 +202,7 @@ namespace calculator
         private void ClickEqual(object sender, RoutedEventArgs e)
         {
             PerformCalculation();
-            operationPerformed = true; 
+            operationPerformed = true;
         }
 
         private void ClickClear(object sender, RoutedEventArgs e)
