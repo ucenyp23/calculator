@@ -3,15 +3,14 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace calculator
 {
     public partial class MainWindow : Window
     {
-        private StringBuilder currentInput = new StringBuilder("0");
+        private readonly StringBuilder currentInput = new("0");
         private double? previousValue = null;
-        private string currentOperation = string.Empty;
+        private string? currentOperation = null;
         private bool operationPerformed = false;
 
         public MainWindow()
@@ -42,7 +41,7 @@ namespace calculator
         {
             currentInput.Clear();
             previousValue = null;
-            currentOperation = string.Empty;
+            currentOperation = null;
             currentInput.Append("0");
             operationPerformed = false;
             UpdateDisplay();
@@ -73,9 +72,9 @@ namespace calculator
                 operationPerformed = false;
             }
 
-            if (!currentInput.ToString().Contains("."))
+            if (!currentInput.ToString().Contains('.'))
             {
-                currentInput.Append(".");
+                currentInput.Append('.');
             }
             UpdateDisplay();
         }
@@ -214,7 +213,7 @@ namespace calculator
                 currentInput.Clear();
                 currentInput.Append(previousValue.Value.ToString());
                 UpdateDisplay();
-                currentOperation = string.Empty;
+                currentOperation = null;
                 previousValue = null;
                 operationPerformed = true;
             }
