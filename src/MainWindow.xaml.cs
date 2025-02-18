@@ -72,9 +72,9 @@ namespace calculator
                 operationPerformed = false;
             }
 
-            if (!currentInput.ToString().Contains('.'))
+            if (!currentInput.ToString().Contains(','))
             {
-                currentInput.Append('.');
+                currentInput.Append(',');
             }
             UpdateDisplay();
         }
