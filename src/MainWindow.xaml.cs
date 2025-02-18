@@ -2,6 +2,7 @@
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace calculator
 {
@@ -213,6 +214,59 @@ namespace calculator
         private void ClickClearEntry(object sender, RoutedEventArgs e)
         {
             ClearEntry();
+        }
+
+        // Keyboard input handling
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Handle different key inputs
+            if (e.Key == Key.Escape)
+            {
+                // Handle escape key (Clear All)
+                ClickClear(null, null);
+            }
+            else if (e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                // Handle Enter/Return key (Equals)
+                ClickEqual(null, null);
+            }
+            else if (e.Key == Key.Back)
+            {
+                // Handle backspace key
+                ClickBackspace(null, null);
+            }
+            else if (e.Key == Key.Decimal || e.Key == Key.OemPeriod)
+            {
+                // Handle decimal key
+                ClickDecimal(null, null);
+            }
+            else
+            {
+                // Handle number and operation keys
+                HandleNumberOrOperationKeys(e.Key);
+            }
+        }
+
+        private void HandleNumberOrOperationKeys(Key key)
+        {
+            string keyString = key.ToString();
+
+            // Handle number keys (main keyboard numbers and keypad numbers)
+            if (key >= Key.D0 && key <= Key.D9)
+            {
+                // Handle number keys (0-9 on main keyboard)
+                ClickNumber(new Button { Content = (key - Key.D0).ToString() }, null);
+            }
+            else if (key >= Key.NumPad0 && key <= Key.NumPad9)
+            {
+                // Handle number keys on the numeric keypad
+                ClickNumber(new Button { Content = (key - Key.NumPad0).ToString() }, null);
+            }
+            // Handle operation keys
+            else if ("+-*/".Contains(key.ToString()))
+            {
+                ClickOperation(new Button { Content = key.ToString() }, null);
+            }
         }
     }
 }
