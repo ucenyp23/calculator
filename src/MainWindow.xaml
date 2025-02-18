@@ -64,7 +64,7 @@
 
         <Button Name="SignToggleButton" Grid.Column="0" Grid.Row="6" Click="ClickSignToggle">+/-</Button>
         <Button Name="ZeroButton" Grid.Column="1" Grid.Row="6" Click="ClickNumber">0</Button>
-        <Button Name="DecimalButton" Grid.Column="2" Grid.Row="6" Click="ClickDecimal">.</Button>
+        <Button Name="DecimalButton" Grid.Column="2" Grid.Row="6" Click="ClickDecimal">,</Button>
         <Button Name="EqualButton" Grid.Column="3" Grid.Row="6" Click="ClickEqual">=</Button>
     </Grid>
 </Window>

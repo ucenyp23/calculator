@@ -3,6 +3,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace calculator
 {
@@ -21,6 +22,12 @@ namespace calculator
 
         private void UpdateDisplay()
         {
+            // Update the display, ensuring negative zero is converted to zero
+            if (currentInput.ToString() == "-0")
+            {
+                currentInput.Clear();
+                currentInput.Append("0");
+            }
             Number.Content = currentInput.ToString();
         }
 
@@ -86,8 +93,17 @@ namespace calculator
 
         private void ClickPercent(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(currentInput.ToString(), out double number))
+            if (previousValue.HasValue && double.TryParse(currentInput.ToString(), out double currentNumber) && previousValue.Value != 0)
             {
+                // Calculate: last_number * (current_number / 100)
+                double result = previousValue.Value * (currentNumber / 100);
+                currentInput.Clear();
+                currentInput.Append(result.ToString());
+                UpdateDisplay();
+            }
+            else if (double.TryParse(currentInput.ToString(), out double number))
+            {
+                // Normal percent calculation: current_number / 100
                 number = number / 100;
                 currentInput.Clear();
                 currentInput.Append(number.ToString());
@@ -139,6 +155,10 @@ namespace calculator
                 currentInput.Clear();
                 currentInput.Append(number.ToString());
                 UpdateDisplay();
+            }
+            else
+            {
+                MessageBox.Show("Cannot calculate the square root of a negative number.");
             }
         }
 
@@ -219,53 +239,92 @@ namespace calculator
         // Keyboard input handling
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            // Handle different key inputs
             if (e.Key == Key.Escape)
             {
-                // Handle escape key (Clear All)
                 ClickClear(null, null);
             }
             else if (e.Key == Key.Enter || e.Key == Key.Return)
             {
-                // Handle Enter/Return key (Equals)
                 ClickEqual(null, null);
             }
             else if (e.Key == Key.Back)
             {
-                // Handle backspace key
                 ClickBackspace(null, null);
             }
             else if (e.Key == Key.Decimal || e.Key == Key.OemPeriod)
             {
-                // Handle decimal key
                 ClickDecimal(null, null);
             }
             else
             {
-                // Handle number and operation keys
                 HandleNumberOrOperationKeys(e.Key);
             }
         }
 
         private void HandleNumberOrOperationKeys(Key key)
         {
-            string keyString = key.ToString();
-
-            // Handle number keys (main keyboard numbers and keypad numbers)
             if (key >= Key.D0 && key <= Key.D9)
             {
-                // Handle number keys (0-9 on main keyboard)
-                ClickNumber(new Button { Content = (key - Key.D0).ToString() }, null);
+                ClickNumberDirect((key - Key.D0).ToString());
             }
             else if (key >= Key.NumPad0 && key <= Key.NumPad9)
             {
-                // Handle number keys on the numeric keypad
-                ClickNumber(new Button { Content = (key - Key.NumPad0).ToString() }, null);
+                ClickNumberDirect((key - Key.NumPad0).ToString());
             }
-            // Handle operation keys
-            else if ("+-*/".Contains(key.ToString()))
+            else if (key == Key.Add || key == Key.OemPlus)
             {
-                ClickOperation(new Button { Content = key.ToString() }, null);
+                ClickOperationDirect("+");
+            }
+            else if (key == Key.Subtract || key == Key.OemMinus)
+            {
+                ClickOperationDirect("-");
+            }
+            else if (key == Key.Multiply)
+            {
+                ClickOperationDirect("*");
+            }
+            else if (key == Key.Divide)
+            {
+                ClickOperationDirect("/");
+            }
+        }
+
+        private void ClickNumberDirect(string number)
+        {
+            if (operationPerformed)
+            {
+                currentInput.Clear();
+                operationPerformed = false;
+            }
+
+            if (currentInput.ToString() == "0")
+            {
+                currentInput.Clear();
+            }
+
+            currentInput.Append(number);
+            UpdateDisplay();
+        }
+
+        private void ClickOperationDirect(string operation)
+        {
+            if (operationPerformed)
+            {
+                currentInput.Clear();
+                operationPerformed = false;
+            }
+
+            if (previousValue.HasValue)
+            {
+                PerformCalculation();
+            }
+
+            currentOperation = operation;
+
+            if (double.TryParse(currentInput.ToString(), out double number))
+            {
+                previousValue = number;
+                currentInput.Clear();
             }
         }
     }
