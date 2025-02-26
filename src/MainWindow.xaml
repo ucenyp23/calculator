@@ -8,7 +8,6 @@
         <!-- Styling buttons with a modern look -->
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="4"/>
             <Setter Property="Background" Value="#f0f0f0"/>
             <Setter Property="BorderBrush" Value="#ccc"/>
         </Style>
@@ -17,22 +16,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Display -->
-        <Label Name="Number" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" 
+        <Label Name="DisplayLabel" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" 
                FontSize="36" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
                Padding="10,20">0</Label>
 

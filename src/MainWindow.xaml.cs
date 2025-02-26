@@ -28,7 +28,7 @@ namespace calculator
                 currentInput.Clear();
                 currentInput.Append("0");
             }
-            Number.Content = currentInput.ToString();
+            DisplayLabel.Content = currentInput.ToString();
         }
 
         private void ClearEntry()
