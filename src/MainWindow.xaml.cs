@@ -10,13 +10,14 @@ namespace calculator
     {
         private readonly StringBuilder currentInput = new("0");
         private double? previousValue = null;
+        private double? newValue = null;
         private string? currentOperation = null;
         private bool operationPerformed = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            Number.Content = currentInput.ToString();
+            UpdateDisplay();
         }
 
         private void UpdateDisplay()
@@ -92,18 +93,9 @@ namespace calculator
 
         private void ClickPercent(object sender, RoutedEventArgs e)
         {
-            if (previousValue.HasValue && double.TryParse(currentInput.ToString(), out double currentNumber) && previousValue.Value != 0)
+            if (double.TryParse(currentInput.ToString(), out double number))
             {
-                // Calculate: last_number * (current_number / 100)
-                double result = previousValue.Value * (currentNumber / 100);
-                currentInput.Clear();
-                currentInput.Append(result.ToString());
-                UpdateDisplay();
-            }
-            else if (double.TryParse(currentInput.ToString(), out double number))
-            {
-                // Normal percent calculation: current_number / 100
-                number = number / 100;
+                number /= 100;
                 currentInput.Clear();
                 currentInput.Append(number.ToString());
                 UpdateDisplay();
@@ -132,6 +124,10 @@ namespace calculator
                 currentInput.Clear();
                 currentInput.Append(number.ToString());
                 UpdateDisplay();
+            }
+            else
+            {
+                MessageBox.Show("Cannot calculate the reciprocal of zero.");
             }
         }
 
@@ -189,18 +185,18 @@ namespace calculator
                 switch (currentOperation)
                 {
                     case "+":
-                        previousValue = previousValue.Value + number;
+                        newValue = previousValue.Value + number;
                         break;
                     case "-":
-                        previousValue = previousValue.Value - number;
+                        newValue = previousValue.Value - number;
                         break;
                     case "*":
-                        previousValue = previousValue.Value * number;
+                        newValue = previousValue.Value * number;
                         break;
                     case "/":
                         if (number != 0)
                         {
-                            previousValue = previousValue.Value / number;
+                            newValue = previousValue.Value / number;
                         }
                         else
                         {
@@ -211,10 +207,8 @@ namespace calculator
                         break;
                 }
                 currentInput.Clear();
-                currentInput.Append(previousValue.Value.ToString());
+                currentInput.Append(newValue.Value.ToString());
                 UpdateDisplay();
-                currentOperation = null;
-                previousValue = null;
                 operationPerformed = true;
             }
         }
@@ -286,6 +280,10 @@ namespace calculator
             {
                 ClickOperationDirect("/");
             }
+            else if (key == Key.Decimal || key == Key.OemPeriod)
+            {
+                ClickDecimal(null, null);
+            }
         }
 
         private void ClickNumberDirect(string number)
@@ -307,17 +305,6 @@ namespace calculator
 
         private void ClickOperationDirect(string operation)
         {
-            if (operationPerformed)
-            {
-                currentInput.Clear();
-                operationPerformed = false;
-            }
-
-            if (previousValue.HasValue)
-            {
-                PerformCalculation();
-            }
-
             currentOperation = operation;
 
             if (double.TryParse(currentInput.ToString(), out double number))
